@@ -6,8 +6,9 @@ import { CountryPage } from './pages/Country';
 function App() {
   return (
     <>
-        <Header />
+        
         <BrowserRouter>
+          <Header />
         {/* <Switch> */}
           <Route path='/' exact component={HomePage} />
           <Route path='/:code' exact component={CountryPage} />        

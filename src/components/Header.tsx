@@ -1,5 +1,6 @@
 import Icon from "./Icon";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 function ThemeToggle() {
   return (
@@ -22,7 +23,9 @@ export function Header() {
         "shadow-md"
       )}
     >
-      <h1 className="text-sm font-bold">Where in the world?</h1>
+      <Link to="/">
+        <h1 className="text-sm font-bold">Where in the world?</h1>
+      </Link>
 
       <ThemeToggle />
     </header>

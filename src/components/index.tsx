@@ -5,3 +5,4 @@ export * from "./Country";
 export * from "./Card";
 export * from "./Icon";
 export * from "./ClickAway";
+export * from './Loading';

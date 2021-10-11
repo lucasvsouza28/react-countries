@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { Search, Select, Country, Card } from '../../components'
+import { Search, Select, Country, Card, Loading } from '../../components'
 import { CountryType, getContries, getcountriesByRegion, getCountriesByName } from '../../services/country.service'
 
 export const HomePage = () => {
@@ -15,14 +15,6 @@ export const HomePage = () => {
 
         return () => {}
     }, []);
-
-    const getLoading = () => {
-        return (
-            <>
-                Loading...
-            </>
-        )
-    }
 
     const handleSelect = async(option: any) => {
         const _countries = await getcountriesByRegion(option.label);
@@ -58,7 +50,7 @@ export const HomePage = () => {
                     />
                 </div>
 
-                { countries.length === 0 && getLoading() }
+                { countries.length === 0 && <Loading /> }
 
                 { countries.length > 0 && (
                 <ul className="p-8 flex justify-between flex-wrap gap-5.3">

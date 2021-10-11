@@ -5,7 +5,20 @@ export type CountryType = {
     population: number;
     capital: string;
     region: string;
+    subregion: string;
     alpha3Code: string;
+    nativeName: string;
+    currencies: [{
+        code: string;
+        name: string;
+        symbol: string;
+    }];
+    languages: [{
+        iso639_1: string;
+        name: string;
+    }];
+    borders: string[];
+    topLevelDomain: string[];
     flags:{
         svg: string;
     }
@@ -33,4 +46,10 @@ export const getCountryByCode = async(code: string): Promise<CountryType> => {
     const { data } = await api.get(`alpha/${code}`);
 
     return data as CountryType;
+}
+
+export const getCountriesByCode = async(codes: string[]): Promise<CountryType[]> => {
+    const { data } = await api.get(`alpha?codes=${codes.join(',')}`);
+
+    return data as CountryType[];
 }
