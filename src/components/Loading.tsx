@@ -1,8 +1,8 @@
 import loading from '../assets/Pulse-1s-200px.svg';
 
 type Props = {
-    width: string | null;
-    heigth: string | null;
+    width?: string;
+    heigth?: string;
 }
 
 export const Loading = ({

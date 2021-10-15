@@ -25,31 +25,31 @@ export type CountryType = {
 }
 
 export const getContries = async (): Promise<CountryType[]> => {
-    const { data } = await api.get('all');
+    const { data } = await api.get<CountryType[]>('all');
 
-    return data as CountryType[];
+    return data;
 }
 
 export const getCountriesByName = async (name: string): Promise<CountryType[]> => {
-    const { data } = await api.get(`name/${name}`);
+    const { data } = await api.get<CountryType[]>(`name/${name}`);
 
-    return data as CountryType[];
+    return data;
 }
 
-export const getcountriesByRegion = async (region: string) => {
-    const { data } = await api.get(`continent/${region}`);
+export const getcountriesByRegion = async (region: string): Promise<CountryType[]> => {
+    const { data } = await api.get<CountryType[]>(`continent/${region}`);
 
     return data;
 }
 
 export const getCountryByCode = async(code: string): Promise<CountryType> => {
-    const { data } = await api.get(`alpha/${code}`);
+    const { data } = await api.get<CountryType>(`alpha/${code}`);
 
-    return data as CountryType;
+    return data;
 }
 
 export const getCountriesByCode = async(codes: string[]): Promise<CountryType[]> => {
-    const { data } = await api.get(`alpha?codes=${codes.join(',')}`);
+    const { data } = await api.get<CountryType[]>(`alpha?codes=${codes.join(',')}`);
 
-    return data as CountryType[];
+    return data;
 }

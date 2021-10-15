@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import { Loading } from '../../components';
 import { CountryType, getCountryByCode, getCountriesByCode } from '../../services/country.service';
 import {
+    MainContainer,
+    ButtonContainer,
     Button,
+    Section,
     Flag,
-    Info,
+    CountryInfo,
     NameLabel,
     DataContainer,
     DataGroup,
@@ -33,7 +36,6 @@ const Data = ({
     );
 }
 
-
 export const CountryPage = () => {
     const [country, setCountry] = useState<CountryType | null>(null);
     const { code } = useParams<CountryParamsType>();
@@ -55,7 +57,7 @@ export const CountryPage = () => {
         );
     }
 
-    const formatPopulation = (population: number) => {        
+    const formatPopulation = (population: number) => {
         const formated = Intl.NumberFormat(navigator.language, {}).format(population);
         return formated;
     }
@@ -69,7 +71,7 @@ export const CountryPage = () => {
     }, [code]);
 
     useEffect(() => {
-        if (country?.borders?.length > 0){            
+        if ((country?.borders?.length ?? 0) > 0){
             getCountriesByCode(country?.borders || []).then(_countries => {
                 setBoderCountries(_countries);
             })
@@ -77,21 +79,20 @@ export const CountryPage = () => {
     }, [country])
 
     return (
-        <main className="p-8">
-            <div className="flex gap-16 justify-start">
+        <MainContainer>
+            <ButtonContainer>
                 <Button onClick={_ => history.goBack()}>
                     Back
                 </Button>
-            </div>
+            </ButtonContainer>
 
-
-            <div className="flex flex-row gap-16 justify-center">
+            <Section>
                 { !country && <Loading /> }
 
                 { country && (
                     <>
                         <Flag src={country.flags.svg} alt={`${country.name}'s flag`} />
-                        <Info>
+                        <CountryInfo>
                             <NameLabel>{country.name}</NameLabel>
 
                             <DataContainer>
@@ -112,10 +113,10 @@ export const CountryPage = () => {
 
                             { renderBorders() }
 
-                        </Info>
+                        </CountryInfo>
                     </>
                 )}
-            </div>
-        </main>
+            </Section>
+        </MainContainer>
     );
 }

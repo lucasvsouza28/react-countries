@@ -1,12 +1,23 @@
 import styled from "styled-components";
 
-export const Flag = styled.img.attrs({
-})`
+export const MainContainer = styled.main.attrs((/* props */) => ({
+    className: 'p-8'
+    }))``;
+
+export const ButtonContainer = styled.div.attrs(() => {
+    className: 'flex gap-16 justify-start'
+})``;
+
+export const Section = styled.div.attrs(() => ({
+    className: 'flex flex-row gap-16 justify-center'
+}))``;
+
+export const Flag = styled.img`
     height: 25rem;
     width: 35rem;    
 `;
 
-export const Info = styled.div`
+export const CountryInfo = styled.div`
     display: flex;
     flex-direction: column;
 `;
@@ -37,8 +48,4 @@ export const Button = styled.button`
     border: 1px solid #DDD;
     padding: 0.5rem 3rem;
     margin-bottom: 1rem;
-
-    &:hover {
-        
-    }
 `;
