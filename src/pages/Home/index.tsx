@@ -30,7 +30,7 @@ export const HomePage = () => {
     return (
         <main>
             <div>
-                <div className="p-8 flex justify-between">
+                <div className="p-2 sm:p-8 flex flex-col items-stretch gap-4 justify-between sm:flex-row sm:gap-0 sm:items-center">
                     <Card>
                         <Search
                             className=""
@@ -53,20 +53,18 @@ export const HomePage = () => {
                 { countries.length === 0 && <Loading /> }
 
                 { countries.length > 0 && (
-                <ul className="p-8 flex justify-between flex-wrap gap-5.3">
-                    { countries.map(c => 
+                <ul className="p-2 sm:p-8 grid gap-5 grid-cols-1 sm:grid-cols-3 sm:gap-12 lg:grid-cols-4">
+                    { countries.map(c =>
 
                         <Link
-                            to={`/${c.alpha3Code}`}
-                            key={c.name}
+                            to={`/${c.cca3}`}
+                            key={c.cca3}
                         >
-                            <li className="mb-4" style={{
-                                width: '15rem'
-                            }}>
+                            <li className="mb-4">
                                 <Card>
                                 <Country
                                     flag={c.flags.svg}
-                                    name={c.name}
+                                    name={c.name.common}
                                     population={c.population}
                                     region={c.region}
                                     capital={c.capital}

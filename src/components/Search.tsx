@@ -36,7 +36,7 @@ export function Search({ className, onChange }: SearchProps) {
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
-      </label>      
+      </label>
     </form>
   );
 }

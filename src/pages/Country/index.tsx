@@ -3,18 +3,7 @@ import { useParams, useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { Loading } from '../../components';
 import { CountryType, getCountryByCode, getCountriesByCode } from '../../services/country.service';
-import {
-    MainContainer,
-    ButtonContainer,
-    Button,
-    Section,
-    Flag,
-    CountryInfo,
-    NameLabel,
-    DataContainer,
-    DataGroup,
-    Border,
-} from './styles';
+import * as SC from './styles';
 
 type CountryParamsType = {
     code: string
@@ -29,11 +18,11 @@ const Data = ({
     label,
     value
 }: DataProps) => {
-    return (
-        <div>
-            <span className="font-bold">{label}:</span> {value}
-        </div>
-    );
+  return (
+    <div>
+      <span className="font-bold">{label}:</span> {value}
+    </div>
+  );
 }
 
 export const CountryPage = () => {
@@ -41,19 +30,20 @@ export const CountryPage = () => {
     const { code } = useParams<CountryParamsType>();
     const [borderCountries, setBoderCountries] = useState<CountryType[]>([]);
     const history = useHistory();
-        
+
     const renderBorders = () => {
 
         if (borderCountries?.length == 0) return null;
 
         return (
-            <DataContainer className="mt-40">
-                <span className="font-bold">Border Countries: </span> { borderCountries.map((b) => (
-                    <Link key={b.alpha3Code} to={`/${b.alpha3Code}`}>
-                        <Border>{b.name}</Border>
+            <SC.BorderCountriesDataContainer>
+                <span className="font-bold">Border Countries: </span>
+                { borderCountries.map((b) => (
+                    <Link key={b.cca3} to={`/${b.cca3}`}>
+                        <SC.Border>{b.name.common}</SC.Border>
                     </Link>
                 )) }
-            </DataContainer>
+            </SC.BorderCountriesDataContainer>
         );
     }
 
@@ -79,44 +69,44 @@ export const CountryPage = () => {
     }, [country])
 
     return (
-        <MainContainer>
-            <ButtonContainer>
-                <Button onClick={_ => history.goBack()}>
+        <SC.MainContainer>
+            <SC.ButtonContainer>
+                <SC.Button onClick={_ => history.goBack()}>
                     Back
-                </Button>
-            </ButtonContainer>
+                </SC.Button>
+            </SC.ButtonContainer>
 
-            <Section>
+            <SC.Section>
                 { !country && <Loading /> }
 
                 { country && (
                     <>
-                        <Flag src={country.flags.svg} alt={`${country.name}'s flag`} />
-                        <CountryInfo>
-                            <NameLabel>{country.name}</NameLabel>
+                        <SC.Flag src={country.flags?.svg} alt={`${country.name?.common}'s flag`} />
+                        <SC.CountryInfo>
+                            <SC.NameLabel>{country.name?.common}</SC.NameLabel>
 
-                            <DataContainer>
-                                <DataGroup>
-                                    <Data label="Native Name" value={country.nativeName} />
+                            <SC.DataContainer>
+                                <SC.DataGroup>
+                                    { country.name.nativeName?.common ?? <Data label="Native Name" value={country.name.nativeName.common} /> }
                                     <Data label="Population" value={formatPopulation(country.population)} />
                                     <Data label="Region" value={country.region} />
                                     <Data label="Sub Region" value={country.subregion} />
                                     <Data label="Capital" value={country.capital} />
-                                </DataGroup>
-                                
-                                <DataGroup>
+                                </SC.DataGroup>
+
+                                <SC.DataGroup>
                                     { country.topLevelDomain?.length > 0 && <Data label="Top Level Domain" value={country.topLevelDomain[0]} /> }
-                                    <Data label="Currencies" value={country.currencies.map(c => c.code).join(', ')} />
-                                    <Data label="Languages" value={country.languages.map(c => c.name).join(', ')} />
-                                </DataGroup>
-                            </DataContainer>
+                                    { country.currencies && <Data label="Currencies" value={Object.keys(country.currencies).join(', ')} /> }
+                                    { country.languages && <Data label="Languages" value={Object.values(country.languages).join(', ')} /> }
+                                </SC.DataGroup>
+                            </SC.DataContainer>
 
                             { renderBorders() }
 
-                        </CountryInfo>
+                        </SC.CountryInfo>
                     </>
                 )}
-            </Section>
-        </MainContainer>
+            </SC.Section>
+        </SC.MainContainer>
     );
 }
